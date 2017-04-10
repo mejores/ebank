@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台管理--新司机银行</title>
+<link rel="stylesheet" href="js/lib/bootstrap.min.css">
+<style type="text/css">
+table{
+border:solid 1px #add9c0 block;
+width:100%;
+text-align: center;}
+td{border:1px solid #add9c0;padding:0;margin:0;}
+#datalist td
+{
+    height: 32px;
+    line-height: 32px;
+}
+</style>
+<script src="js/lib/jquery-1.12.4.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/man.js"></script>
+</head>
+<body>
+<div style="text-align:center; padding-top:3px; width:100%;background:#EEE9BF;height:40px;color:red;position:fixed;top:0px;;">
+<button class="btn btn-primary" onclick="trans('deposit')">存入</button>
+<button class="btn btn-primary" onclick="trans('withdraw')">取出</button>
+<button class="btn btn-primary">重置密码</button>
+<button class="btn btn-warning" id="btnStatu" onclick="changeStatu()">冻结账户</button>
+<button class="btn btn-danger">注销账户</button>
+</div>
+
+<div style="position:absolute;top:40px;;z-index:-1;overflow: auto;text-align:center;width:100%">
+<table id="datalist">
+<tr>
+<td>账号</td>
+<td>帐户名</td>
+<td>余额</td>
+<td>用户类型</td>
+<td>状态</td>
+</tr>
+
+</table>
+　	
+</div>
+
+<!-- 转账模态框（Modal） -->
+<div class="modal fade" id="mtransfer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog "style="height: 300px;width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 class="modal-title" id="transfer">存入取出</h6>
+            </div>
+            <div class="modal-body">
+                <form id="trans" class="form-inline">
+                    <div class="form-group">
+                        <label>转账金额：</label><input type="number" class="form-control" id="sum">
+                        <span id="mWarning" style="color:red;"></span>
+                    </div>
+                    
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="transaction()">确认转账</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+</body>
+</html>
