@@ -44,138 +44,130 @@
     <title>注册--新司机银行</title>
 <script src="js/lib/jquery-1.12.4.min.js"></script>
 </head>
-<body ng-app="logApp" ng-controller="logController">
+<body >
 <div id="content">
 <div class="wrapper">
-<form name="loginForm" class="form-inline" ng-submit="submitForm()">
+<form name="loginForm" method="post" class="form-inline" >
     <div class="form-group">
         <h3>注册新用户</h3>
         <label>用&nbsp户&nbsp名：&nbsp</label>
         <input name="username"
                type="text"
-               ng-model="userdata.username"
-               ng-class="{'error':loginForm.username.$invalid&& loginForm.username.$touched}"
-               required ng-minlength="3"
                class="form-control" id="username"
                onblur="regBlur()" onfocus="regFocus()">
-        <span class="error"
-           ng-if="loginForm.username.$error.required&&loginForm.username.$touched">
-            不能为空</span>
-        <span class="error"
-           ng-if="loginForm.username.$error.minlength&&loginForm.username.$touched">
-            长度至少为3位</span>
-            <span id="isExist" >该账号不存在</span>
+        <span style="visibility:hidden" id="warname" >该账号不存在</span> 
     </div>
     <div class="form-group">
         <label>密&nbsp&nbsp&nbsp&nbsp&nbsp码&nbsp&nbsp：</label>
-        <input class="form-control" type="password" name="password" ng-model="userdata.password"
-        required ng-minlength="4">
-        <span class="error"
-           ng-if="loginForm.password.$error.required&&loginForm.password.$touched">
-            密码不能为空</span>
-        <span class="error"
-           ng-if="loginForm.password.$error.minlength&&loginForm.password.$touched">
-            长度至少为4位</span>
+        <input class="form-control" type="password" id="password">
+        <span style="visibility:hidden" id="warpass" class="error">密码不能为空</span>
             
     </div>
     <div class="form-group">
         <label>确认密码：</label>
-
-        <input class="form-control" type="password" name="repassword" ng-model="userdata.repassword"
-        required compare="userdata.password">
-        <span class="error"
-           ng-if="loginForm.repassword.$error.compare&&loginForm.repassword.$touched">
-            两次密码不一致</span>
+        <input class="form-control" type="password" id="repassword" >
+        <span style="visibility:hidden" id="warrepass" class="error"> 两次密码不一致</span>
     </div><br>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" ng-disabled="loginForm.username.$invalid" >注册</button>
+        <button type="button" onclick="regi()" class="btn btn-primary" >注册</button>
     </div>
 </form>
 </div>
 </div>
 
-<script src="https://code.angularjs.org/1.6.0/angular.min.js"></script>
 <script>
-    //一个单页只能使用一次ng-app
-    var app= angular.module('logApp',[]);
-    app.controller('logController',function ($scope) {
-        $scope.userdata={};
-        $scope.submitForm=function () {
-            //js里面用变量不要加双大括号
-            console.log($scope.userdata);
-            if($scope.loginForm.$invalid){
-                alert("请检查输入信息");
-            }else{
-            	var username=$("#username").val().trim();
-            	var username=$("#password").val().trim();
-            	if(username!=""){
-            		$.ajax({
-            			url:'IsExist.do',
-            			method:'post',
-            			data:{"toUsername":toUsername},//要传回的数据
-            			dataType:'text',
-            			success:function(msg){
-            				if(msg=="fail"){
-            					$("#isExist").css("visibility","visible"); 
-            				}
-            			}
-            		}); 
-            	}
-            }
-        }
-    });
-    //比较两次密码是否一致
-        app.directive('compare',function () {
-        var o={};
-        o.strict='AE';
-        o.scope={
-            //第一次密码
-            orgText:'=compare'
-        }
-        o.require='ngModel';
-        o.link=function (sco,ele,att,con) {
-            con.$validators.compare=function (v) {
-                //返回两次密码是否一致
-                return v==sco.orgText;
-            }
-            //一旦这个有变化，就开始验证
-            sco.watch('orgText',function () {
-                con.$validate();
-            })
-        }
-        return o;
-    })
+$(function(){
+	
+})
+var isvalid="false";
+//检测用户是否存在
+function isExists(){
+	var username=$("#username").val();
+	if(username!=""){
+		$.ajax({
+			url:'IsExist.do',
+			method:'post',
+			data:{"toUsername":username},//要传回的数据
+			dataType:'text',
+			success:function(msg){
+				if(msg=="fail"){
+					isvalid="true"
+					$("#warname").html("该账号可用");
+					$("#warname").css("visibility","visible");
+					$("#warname").css("color","green");
+				}else{
+					$("#warname").html("该账号已被占用");
+					$("#warname").css("visibility","visible");
+					$("#warname").css("color","red");
+				}
+			}
+		}); 
+	}
+}
+
+function checkUname(){
+	var username=$("#username").val();
+	if(username.trim().length<3||username.trim().length>15){
+		$("#warname").html("用户名需3到15位");
+		$("#warname").css("visibility","visible");
+		$("#warname").css("color","red");
+		return false;
+	}
+	return true;
+}
+function checkPassword(){
+	var password=$("#password").val();
+	if(password.trim().length<3||password.trim().length>15){
+		$("#warpass").html("密码需3到15位");
+		$("#warpass").css("visibility","visible");
+		$("#warname").css("color","red");
+		return false;
+	}
+	return true;
+}
+
+function checkRepassword(){
+	var password=$("#password").val();
+	var repassword=$("#repassword").val();
+	if(password!=repassword){
+		$("#warrepass").html("前后密码不一致");
+		$("#warrepass").css("visibility","visible");
+		$("#warrename").css("color","red");
+		return false;
+	}
+	return true;
+}
+
+function regi(){
+	alert("zhuce");
+	if(checkUname()&&checkPassword()&&checkRepassword()){
+		alert("gg")
+		var username=$("#username").val().trim();
+		var password=$("#password").val().trim();
+		var param={"username":username,"password":password};
+		alert(param);
+		 $.post("Register.do",param,function(msg){
+			if(msg=="success"){
+				$("#warrepass").html("注册成功，请等待管理员审核");
+				$("#warrepass").css("visibility","visible");
+				$("#warrename").css("color","green");
+			}
+		}) 
+
+	}
+}
+
+
     
    /*  function register(){
     	alert("注册");
     } */
   //验证数据用户名是否存在
     function regBlur(){
-    	var username=$("#username").val();
-    	if(username!=""){
-    		$.ajax({
-    			url:'IsExist.do',
-    			method:'post',
-    			data:{"toUsername":username},//要传回的数据
-    			dataType:'text',
-    			success:function(msg){
-    				if(msg=="fail"){
-    					$("#isExist").html("该账号可用");
-    					$("#isExist").css("visibility","visible");
-    					$("#isExist").css("visibility","visible");
-    					$("#isExist").css("color","green");
-    				}else{
-    					$("#isExist").html("该账号已被占用");
-    					$("#isExist").css("visibility","visible");
-    					$("#isExist").css("color","red");
-    				}
-    			}
-    		}); 
-    	}
-    	
+    	isExists()
     }
     function regFocus(){
-    	$("#isExist").css("visibility","hidden"); 
+    	$("#warname").css("visibility","hidden"); 
     }
     
 </script>

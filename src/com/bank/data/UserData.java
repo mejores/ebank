@@ -28,12 +28,13 @@ public class UserData {
 	public void save(User user) {
 		PreparedStatement ps = null;
 		try{
-			ps = conn.prepareCall("insert into users (username,password,usertype,balance)VALUES(?,?,?,?)");
+			ps = conn.prepareCall("insert into users (username,password,usertype,balance,statu)VALUES(?,?,?,?,?)");
 		
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getPassword());
 			ps.setShort(3, new Short(user.getUsertype()));
 			ps.setBigDecimal(4, new BigDecimal("0"));
+			ps.setInt(5, user.getStatu());
 			ps.execute();
 		}catch(SQLException sqle){
 			System.out.println("插入数据出错");
