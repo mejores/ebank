@@ -40,23 +40,32 @@ public class GetUsers extends HttpServlet {
 		//if(con_no!=null&&con_no!=""){
 			UserData userd=new UserData();
 			List<User> users=userd.get("","");
-			System.out.println(users);
 			JSONArray jArray = JSONArray.fromObject(users);
 			HttpSession session=request.getSession();
 			String mname="";
+			String type="";
 			if(session.getAttribute("username")!=null){
-				 mname=session.getAttribute("username").toString();}
-			
+				 mname=session.getAttribute("username").toString();
+				 }
+			if(session.getAttribute("type")!=null){
+				type=session.getAttribute("type").toString();
+			}
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			//
+			if(type.equals("管理员")){
 			if(users.size()==0){
 				JSONObject outData = new JSONObject();
 				outData.put("url", "login.html");
-				out.print("");
+				out.print(outData);
 				}else{
 			//out.write(jArray.toString());}
 			out.print(jArray);}
+			}else{
+				JSONObject outData = new JSONObject();
+				outData.put("url", "login.html");
+				out.print(outData);
+			}
 			out.flush();
 			out.close();
 	}

@@ -22,7 +22,8 @@ function loaduserview(){
 	$.getJSON("GetUsers.do",function(userslist){
 		var temp="";
 		if(userslist.url!=null){
-			location.href=userslist.url;
+			alert("权限缺失！");
+			window.history.go(-1);  
 		}else{
 		$.each(userslist, function(idx, obj) {
 			//var json_data = JSON.stringify(obj); 

@@ -54,6 +54,7 @@ public class Login extends HttpServlet {
 					if(user.getStatu()==1){
 					request.getSession().setAttribute("username", username);
 					request.getSession().setAttribute("password", password);
+					request.getSession().setAttribute("type", user.getUsertype());
 					msg="success";
 					}else if(user.getStatu()==2){
 						//等待审核

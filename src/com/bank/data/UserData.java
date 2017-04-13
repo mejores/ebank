@@ -115,7 +115,7 @@ public class UserData {
 						ps.setString(1, uParam);
 					}
 				}else{
-					ps=conn.prepareStatement("select * from users ORDER BY statu=2 DESC");
+					ps=conn.prepareStatement("select * from users where usertype=1 ORDER BY statu=2 DESC");
 		}
 		ret= ps.executeQuery();
 		while(ret.next()){
