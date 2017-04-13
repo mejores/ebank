@@ -24,9 +24,9 @@ td{border:1px solid #add9c0;padding:0;margin:0;}
 <div style="text-align:center; padding-top:3px; width:100%;background:#EEE9BF;height:40px;color:red;position:fixed;top:0px;;">
 <button class="btn btn-primary" onclick="trans('deposit')">存入</button>
 <button class="btn btn-primary" onclick="trans('withdraw')">取出</button>
-<button class="btn btn-primary">重置密码</button>
+<button class="btn btn-primary" onclick="initPwd()">重置密码</button>
 <button class="btn btn-warning" id="btnStatu" onclick="changeStatu()">冻结账户</button>
-<button class="btn btn-danger">注销账户</button>
+<button class="btn btn-danger" onclick="deleteUser()">注销账户</button>
 </div>
 
 <div style="position:absolute;top:40px;;z-index:-1;overflow: auto;text-align:center;width:100%">
@@ -63,7 +63,7 @@ td{border:1px solid #add9c0;padding:0;margin:0;}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="transaction()">确认转账</button>
+                <button type="button" class="btn btn-primary" onclick="transaction()">确认</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

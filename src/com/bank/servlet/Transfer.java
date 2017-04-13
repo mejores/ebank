@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bank.data.MessageData;
 import com.bank.data.UserData;
@@ -43,6 +44,10 @@ public class Transfer extends HttpServlet {
 		//取出还是存入
 		String ttype=request.getParameter("ttype");
 		String msg="fail";
+		HttpSession session=request.getSession();
+		String sName="";
+		if(session.getAttribute("username")!=null){
+		sName=session.getAttribute("username").toString();};
 		if(userid!=null){
 			UserData userd=new UserData();
 			List<User> users=userd.get(userid,"id");
@@ -63,7 +68,16 @@ public class Transfer extends HttpServlet {
 						}else{
 							user.setBalance(user.getBalance().subtract(bigd));
 							userd.update(user);
-							
+							Message message=new Message();
+							message.setFrom(sName);
+							message.setTo(user.getUsername());
+							if(Integer.parseInt(sum)>0){
+							message.setContent("您的账户取出"+sum+"元");
+							message.setIsReaded("否");
+							}else{
+								message.setContent("您的账户存入"+sum+"元");
+							}
+							new MessageData().save(message);
 						}
 						
 						msg="success";

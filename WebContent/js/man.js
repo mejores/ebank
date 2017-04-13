@@ -90,6 +90,7 @@ function transaction(){
 			$("#mWarning").fadeIn(200);
 			if(msg=="success"){
 				$("#mWarning").text("成功"); 
+				
 			}else if(msg=="notEnough"){
 				$("#mWarning").text("余额不足");
 			}else{
@@ -121,12 +122,41 @@ function changeStatu(){
 		}
 	})
 }
+//判断是否选中了用户
+function isChecked (){
+	if(checked_press_id==""){
+		alert("请选择要操作的用户");
+		return false;
+	}
+	return true;
+}
 
 //初始化密码
 function initPwd(){
+	if(isChecked()){
+	var sure=confirm("确定重置密码吗？");
+	if(sure==true){
+		$.post("initPwd.do",{"userid":checked_press_id},function(msg){
+			if(msg!="fail"&&msg!=null){
+				alert("重置成功为："+msg);
+			}
+		})
+	}
+	}
 	
 }
-
+function deleteUser(){
+	if(isChecked){
+	var sure=confirm("确定注销吗？");
+	if(sure==true){
+		$.post("deleteUser.do",{"userid":checked_press_id},function(msg){
+			if(msg=="success"){
+				location.reload();
+			}
+		})
+	}
+	}
+}
 //选中欲操作用户
 function checked(id,type){
 	//把已经点击过的内容还原；
