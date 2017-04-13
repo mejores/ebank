@@ -106,13 +106,18 @@ function transaction(){
 //更改用户状态
 function changeStatu(){
 	var statu= $("#btnStatu").text();
-	if(statu=="通过审核"||statu=="解冻账户"){
-		statu="1"
+	if(statu=="通过审核"){
+		statu="2to1"
 	}else if(statu=="冻结账户"){
-		statu="4";
+		statu="1to4";
+	}else if(statu=="解冻账户"){
+		statu="4to1";
 	}
+	var param={"userid":checked_press_id,"statu":statu};
 	$.post("changeStatu.do",param,function(msg){
-		
+		if(msg=="success"){
+			location.reload();
+		}
 	})
 }
 

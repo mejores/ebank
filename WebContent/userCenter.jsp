@@ -76,7 +76,7 @@
         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal">修改密码</button>
         <button type="button" id="checkmess" class="btn btn-info btn-sm" onclick="location.href='messages.jsp'">查看消息<span></span></button>
         <%-- <c:if test="${requestScope.user.usertype=='管理员'}"> --%>
-    		<a href="manage.jsp" id="manage" type="button" style="display:none" class="btn btn-primary btn-sm">管理员</a>
+    		<a href="manage.html" id="manage" type="button" style="display:none" class="btn btn-primary btn-sm">管理员</a>
     	<%-- </c:if> --%>
         
     </div>

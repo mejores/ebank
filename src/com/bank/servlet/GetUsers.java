@@ -9,10 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.bank.data.UserData;
 import com.bank.entity.User;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class GetUsers
@@ -39,10 +42,19 @@ public class GetUsers extends HttpServlet {
 			List<User> users=userd.get("","");
 			System.out.println(users);
 			JSONArray jArray = JSONArray.fromObject(users);
+			HttpSession session=request.getSession();
+			String mname="";
+			if(session.getAttribute("username")!=null){
+				 mname=session.getAttribute("username").toString();}
 			
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
-			if(users.size()==0){out.write("");}else{
+			//
+			if(users.size()==0){
+				JSONObject outData = new JSONObject();
+				outData.put("url", "login.html");
+				out.print("");
+				}else{
 			//out.write(jArray.toString());}
 			out.print(jArray);}
 			out.flush();
