@@ -72,6 +72,8 @@ public class Login extends HttpServlet {
 			
 			}
 		}
+		String os= System.getProperty("os.name");
+		System.out.println(os);
 		//JSONObject outData = new JSONObject();
 		//outData.put("msg", msg);
 		 pw.print(msg);  

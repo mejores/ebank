@@ -16,7 +16,7 @@ function loadview(){
 	
 	$.getJSON("index",function(info){
 		info=info.data;
-		var temp="<p id='userid'> 账&nbsp&nbsp&nbsp号&nbsp&nbsp&nbsp：<span>#{userid}</span><br></p>"+
+		var temp="<p> 账&nbsp&nbsp&nbsp号&nbsp&nbsp&nbsp：<span id='userid'>#{userid}</span><br></p>"+
         "<p>用&nbsp户&nbsp名&nbsp：<span>#{username}</span><br></p>"+
         "<p>账户类型：<span>#{balance}</span><br></p>"+
         "<p>余&nbsp&nbsp&nbsp额&nbsp&nbsp&nbsp：<span>￥#{balance}</span></p>"

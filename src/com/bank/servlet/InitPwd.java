@@ -40,14 +40,12 @@ public class InitPwd extends HttpServlet {
 		String userid=request.getParameter("userid");
 		HttpSession session=request.getSession();
 		String sName="";
-		System.out.println(userid);
 		if(session.getAttribute("username")!=null){
 		  sName=session.getAttribute("username").toString();}
 		
 		PrintWriter pw=response.getWriter();
 		String msg="fail";
 		if(userid!=null){
-			System.out.println(userid);
 			String password=getPwd(6);
 			UserData userd=new UserData();
 			List<User> users = userd.get(userid, "id");
